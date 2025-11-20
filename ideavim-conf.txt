@@ -80,7 +80,7 @@ xnoremap p pgvy
 "xnoremap p "_dp
 
 """ 검색 하이라이트 취소 설정 ----------------------
-nnoremap <leader><ESC> :nohlsearch<CR>
+nnoremap <ESC> :nohlsearch<CR>
 
 """ 탭 이동 설정 --------------------------------
 nnoremap <leader>1 1gt
@@ -131,6 +131,7 @@ map \c <action>(Stop)
 map \b <action>(ToggleLineBreakpoint)
 
 """ mark 표시하기
+nnoremap <leader>M :action ToggleBookmarkWithMnemonic<CR>
 nnoremap <leader>m :action ToggleBookmark<CR>
 nnoremap <leader>n :action GotoNextBookmark<CR>
 nnoremap <leader>b :action GotoPreviousBookmark<CR>
