@@ -73,7 +73,11 @@ vnoremap n <gv
 vnoremap . >gv
 
 """ 삭제 명령어 클립보드 저장 여부 설정 --------------
-nnoremap x "_x
+"잘라내기 시 클립보드 안들어가려면
+"nnoremap x "_x
+"vnoremap x "_x
+nnoremap x x
+vnoremap x x
 nnoremap d "_d
 vnoremap d "_d
 xnoremap p pgvy
