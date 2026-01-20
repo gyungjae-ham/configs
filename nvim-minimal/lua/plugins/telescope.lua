@@ -10,7 +10,7 @@ return {
 		},
 		keys = {
 			{
-				"<leader>fP",
+				";p",
 				function()
 					require("telescope.builtin").find_files({
 						cwd = require("lazy.core.config").options.root,
