@@ -1,136 +1,99 @@
 [user]
-    email = gyeongjae.h.dev@gmail.com
-    name = Gyeongjae Ham
-[core]
-    pager = delta
-    editor = vim
-    excludesfile = ~/.gitignore
-    fsmonitor = true
-    untrackedCache = true
-[interactive]
-    diffFilter = delta --color-only
-[delta]
-    navigate = true
-    light = false
-    side-by-side = true
-    line-numbers = true
-    diff-highlight = true
+    name = bind-luca
+    email = luca@bindcorporation.com
 
-    file-added-label = [+]
-    file-copied-label = [==]
-    file-modified-label = [*]
-    file-removed-label = [-]
-    file-renamed-label = [->]
-
-    minus-style = normal "#340001"
-    minus-emph-style = normal "#b80000"
-    plus-style = normal "#012800"
-    plus-emph-style = normal "#006000"
-
-    minus-non-emph-style = dim syntax "#340001"
-    plus-non-emph-style = dim syntax "#012800"
-
-    commit-style = raw
-    file-style = omit
-    hunk-header-decoration-style = none
-    features = decorations
-
-    features = line-numbers decorations file-style
-
-    minus-empty-line-marker-style = red bold
-    plus-empty-line-marker-style = green bold
-
-    keep-plus-minus-markers = true
-
-    syntax-theme = OneHalfDark
-
-    file-style = bold yellow ul
-    file-decoration-style = yellow box
-
-    commit-decoration-style = bold yellow box ul
-
-    minus-style = red bold
-    minus-emph-style = brightred bold
-    plus-style = green bold
-    plus-emph-style = brightgreen bold
-
-    zero-style = dim syntax
-    whitespace-error-style = reverse red
-[delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
-    hunk-header-decoration-style = yellow box
 [alias]
-    a = add .
-    c = commit -m 
-    sc = switch -c
-    df = diff
     l = log
     hs = log --graph --all --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(white)%s %Cgreen(%cr) %C(bold blue){{%an}}%C(reset) %C(blue)%d%C(reset)' --date=short
     overview = "!f() { \
-  echo \"=== Branch Information ===\"; \
-  git branch -vv; \
-  echo; \
-  echo \"=== Status Overview ===\"; \
-  git status -sb; \
-  echo; \
-  echo \"=== Modified Files ===\"; \
-  git diff --name-status; \
-  echo; \
-  echo \"=== Staged Files ===\"; \
-  git diff --name-status --staged; \
-  echo; \
-  echo \"=== Recent Commits ===\"; \
-  git log --oneline -n 5; \
-  echo; \
-  echo \"=== Stashed Changes ===\"; \
-  git stash list; \
-}; f"
+      echo \"=== Branch Information ===\"; \
+      git branch -vv; \
+      echo; \
+      echo \"=== Status Overview ===\"; \
+      git status -sb; \
+      echo; \
+      echo \"=== Modified Files ===\"; \
+      git diff --name-status; \
+      echo; \
+      echo \"=== Staged Files ===\"; \
+      git diff --name-status --staged; \
+      echo; \
+      echo \"=== Recent Commits ===\"; \
+      git log --oneline -n 5; \
+      echo; \
+      echo \"=== Stashed Changes ===\"; \
+      git stash list; \
+    }; f"
+    # 제목과 본문을 나누어 커밋하는 별칭 (사용법: git cm "제목" "본문")
+    cm = "!f() { git commit -m \"$1\" -m \"$2\"; }; f"
+
+[core]
+    # 파일명 대소문자 구분 (Windows/macOS 혼용 시 발생할 수 있는 문제 방지)
+    ignorecase = false
+    # 파일명에 한글이 포함되어도 깨지지 않게 표시
+    quotepath = false
+    # 커밋 메시지 작성 시 기본 에디터 설정 (예: code --wait, vim, nano 등)
+    # editor = code --wait
+
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+
 [color "status"]
     added = green bold
     changed = yellow bold
     untracked = red bold
     branch = magenta bold
+
 [column]
     ui = auto
+
 [branch]
     sort = -committerdate
+
 [tag]
     sort = version:refname
+
 [init]
     defaultBranch = main
+
 [diff]
     algorithm = histogram
     colorMoved = plain
     mnemonicPrefix = true
     renames = true
+
 [push]
     default = simple
     autoSetupRemote = true
     followTags = true
+
 [fetch]
     prune = true
     pruneTags = true
     all = true
+
 [help]
     autocorrect = prompt
+
 [commit]
+    # 커밋 시 변경 사항(diff)을 에디터 하단에 보여줌 (실수 방지)
     verbose = true
+
 [rerere]
     enabled = true
-    autoupdate = true
+    # autoupdate = true (위험하여 제거: 자동 해결된 코드를 검토 없이 add하지 않도록 함)
+
 [rebase]
     autoSquash = true
     autoStash = true
     updateRefs = true
+
 [merge]
+    # 충돌 발생 시 공통 조상 코드까지 보여주는 zdiff3 (매우 유용)
     conflictstyle = zdiff3
+
 [pull]
     rebase = true
-
