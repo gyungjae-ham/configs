@@ -26,8 +26,6 @@
       echo \"=== Stashed Changes ===\"; \
       git stash list; \
     }; f"
-    # 제목과 본문을 나누어 커밋하는 별칭 (사용법: git cm "제목" "본문")
-    cm = "!f() { git commit -m \"$1\" -m \"$2\"; }; f"
 
 [core]
     # 파일명 대소문자 구분 (Windows/macOS 혼용 시 발생할 수 있는 문제 방지)

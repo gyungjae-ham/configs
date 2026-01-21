@@ -37,66 +37,115 @@ function mc {
 alias ip="curl -s http://checkip.dyndns.org/ | sed 's/[a-zA-Z<>/ :]//g'"
 
 ## git
-function w() { git switch "$@" }
-function su() { git stash save -u "$@" }
-function sc() { git switch -c "$@" }
-function c() { git c "$@" }
-function f() { git fetch origin "$@" }
-function fp() { git push -f origin "$@" }
-function p() { git push origin "$@" }
-function pu() { git pull origin "$@" }
-function bd() { git branch -D "$@" }
-function spn() { git stash pop stash@{$@} }
-function sa() { git stash apply stash@{$@} }
-function sd() { git stash drop stash@{$@} }
-function prb() {
-  local current_branch=$(git rev-parse --abbrev-ref HEAD)
-  local target_branch="$1"
-  
-  echo "🔍 현재 브랜치: \033[1;36m$current_branch\033[0m"
-  echo "🎯 타겟 브랜치: \033[1;33m$target_branch\033[0m"
-  
-  # 1. 타겟 브랜치로 이동
-  echo "\n📌 Step 1: \033[1;33m$target_branch\033[0m 브랜치로 이동 중..."
-  git switch "$target_branch" || { echo "\033[1;31m❌ 브랜치 전환 실패!\033[0m"; return 1; }
-  echo "\033[1;32m✅ 브랜치 전환 완료\033[0m"
-  
-  # 2. 타겟 브랜치 pull
-  echo "\n📌 Step 2: \033[1;33m$target_branch\033[0m 브랜치 pull 중..."
-  git pull origin "$target_branch" || { 
-    echo "\033[1;31m❌ Pull 실패! 원래 브랜치로 돌아갑니다.\033[0m"
-    git switch "$current_branch"
+function w() { git switch "$@" } # 브랜치 이동
+function su() { git stash save -u "$@" } # Stash 저장
+function sc() { git switch -c "$@" } # 브랜치 생성하면서 이동
+function f() { git fetch origin "$@" } # git fetch
+function fp() { git push -f origin "$@" } # git force push
+function p() { git push origin "$@" } # git push
+function pu() { git pull origin "$@" } # git pull
+function bd() { git branch -D "$@" } # git branch 삭제
+function spn() { git stash pop stash@{$@} } # git stash 제거하면서 적용
+function sa() { git stash apply stash@{$@} } # git stash 적용만 stash는 유지
+function sd() { git stash drop stash@{$@} } # git stash 삭제
+
+# git commit "제목""본문"
+function c() {
+  if [ -z "$1" ]; then
+    echo "오류: 제목을 입력해주세요."
+    echo "사용법: c \"제목\" \"본문(선택)\""
     return 1
-  }
-  echo "\033[1;32m✅ Pull 완료\033[0m"
-  
-  # 3. 원래 브랜치로 돌아감
-  echo "\n📌 Step 3: \033[1;36m$current_branch\033[0m 브랜치로 복귀 중..."
-  git switch "$current_branch" || { 
-    echo "\033[1;31m❌ 원래 브랜치로 복귀 실패!\033[0m"
-    return 1
-  }
-  echo "\033[1;32m✅ 브랜치 복귀 완료\033[0m"
-  
-  # 4. 타겟 브랜치를 기준으로 rebase
-  echo "\n📌 Step 4: \033[1;33m$target_branch\033[0m 기준으로 rebase 중..."
-  git rebase "$target_branch"
-  
-  local rebase_status=$?
-  if [ $rebase_status -eq 0 ]; then
-    echo "\033[1;32m✅ Rebase 완료\033[0m"
-    echo "\n\033[1;32m🎉 모든 작업이 성공적으로 완료되었습니다!\033[0m"
-  else
-    echo "\033[1;31m⚠️ Rebase 중 충돌이 발생했습니다. 충돌을 해결한 후 계속하세요.\033[0m"
   fi
+
+  if [ -z "$2" ]; then
+    # 본문이 없는 경우 제목만 커밋
+    git commit -m "$1"
+  else
+    # 제목과 본문을 나누어 커밋
+    git commit -m "$1" -m "$2"
+  fi
+}
+
+# 워크트리 리스트
+function wl() {
+  git worktree list
+}
+
+# 워크트리 추가 (브랜치 있으면 체크아웃, 없으면 생성)
+# 사용법: wa feature/login
+function wa() {
+  if [ -z "$1" ]; then
+    echo "사용법: wa <브랜치명>"
+    return 1
+  fi
+  
+  local branch=$1
+  local dir="../${PWD##*/}-$branch"
+  
+  # 브랜치 존재 여부 확인
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add "$dir" "$branch"
+  else
+    git worktree add -b "$branch" "$dir"
+  fi
+  
+  cd "$dir"
+}
+
+# 워크트리 삭제
+# 사용법: wr feature/login
+function wr() {
+  if [ -z "$1" ]; then
+    echo "사용법: wr <브랜치명>"
+    return 1
+  fi
+  
+  local branch=$1
+  local dir="../${PWD##*/}-$branch"
+  
+  git worktree remove "$dir"
+}
+
+# 워크트리 강제 삭제 (변경사항 무시)
+function wrf() {
+  if [ -z "$1" ]; then
+    echo "사용법: wrf <브랜치명>"
+    return 1
+  fi
+  
+  local branch=$1
+  local dir="../${PWD##*/}-$branch"
+  
+  git worktree remove --force "$dir"
+}
+
+# 워크트리로 이동 (fzf 필요)
+function wc() {
+  local selected=$(git worktree list | fzf --height 40% | awk '{print $1}')
+  if [ -n "$selected" ]; then
+    cd "$selected"
+  fi
+}
+
+# 워크트리 정리 (삭제된 디렉토리 정보 제거)
+function wp() {
+  git worktree prune -v
+}
+
+# 현재 워크트리 정보
+function wi() {
+  echo "📁 현재 위치: $(pwd)"
+  echo "🌿 브랜치: $(git branch --show-current)"
+  echo ""
+  echo "📋 전체 워크트리:"
+  git worktree list
 }
 
 alias sp="git stash pop"
 alias sl="git stash list"
-alias st="git overview" # 사용하려면 brew install git-delta
 alias ba="git branch -a"
+alias ov="git overview" # 사용하려면 brew install git-delta
 alias d="git df"
-alias fo="git fetch origin"
 
 ## completions
 _git_branch_completion() {
@@ -111,8 +160,6 @@ compdef _git_branch_completion fp
 compdef _git_branch_completion p
 compdef _git_branch_completion pu
 compdef _git_branch_completion bd
-compdef _git_branch_completion rb
-compdef _git_branch_completion prb
 
 ## tmux
 alias tm="tmux"
@@ -123,10 +170,6 @@ alias tma="tmux a"
 ## gradle setting
 alias gk="./gradlew ktlintFormat"
 alias xx="./gradlew clean test --info --console=rich --stacktrace --fail-fast"
-
-# c++ 설정
-alias cc="g++ -std=c++17 -Wall solve.cpp -o solve.out"
-alias rn="./solve.out"
 
 ## homebrew
 export EDITOR=/usr/homebrew/bin/nvim
