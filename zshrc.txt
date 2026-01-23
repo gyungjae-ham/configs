@@ -71,6 +71,13 @@ function wl() {
   git worktree list
 }
 
+# ===== Git Worktree 함수들 =====
+
+# 워크트리 목록 보기 (보기 좋게)
+function wl() {
+  git worktree list
+}
+
 # 워크트리 추가 (브랜치 있으면 체크아웃, 없으면 생성)
 # 사용법: wa feature/login
 function wa() {
@@ -101,9 +108,13 @@ function wr() {
   fi
   
   local branch=$1
-  local dir="../${PWD##*/}-$branch"
+  local main_dir=$(git worktree list | head -1 | awk '{print $1}')
+  local base=$(basename "$main_dir")
+  local dir="$(dirname "$main_dir")/${base}-$branch"
   
-  git worktree remove "$dir"
+  if git worktree remove "$dir"; then
+    git branch -d "$branch" 2>/dev/null || echo "로컬 브랜치 없음 또는 머지 안됨"
+  fi
 }
 
 # 워크트리 강제 삭제 (변경사항 무시)
@@ -114,9 +125,13 @@ function wrf() {
   fi
   
   local branch=$1
-  local dir="../${PWD##*/}-$branch"
+  local main_dir=$(git worktree list | head -1 | awk '{print $1}')
+  local base=$(basename "$main_dir")
+  local dir="$(dirname "$main_dir")/${base}-$branch"
   
-  git worktree remove --force "$dir"
+  if git worktree remove --force "$dir"; then
+    git branch -D "$branch" 2>/dev/null || echo "로컬 브랜치 없음"
+  fi
 }
 
 # 워크트리로 이동 (fzf 필요)
