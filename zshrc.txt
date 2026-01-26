@@ -177,10 +177,10 @@ compdef _git_branch_completion pu
 compdef _git_branch_completion bd
 
 ## tmux
-alias tm="tmux"
+alias tm="tmux new -s "
 alias tml="tmux ls"
 alias tmk="tmux kill-server"
-alias tma="tmux a"
+alias tma="tmux a -t "
 
 ## gradle setting
 alias gk="./gradlew ktlintFormat"
