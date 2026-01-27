@@ -175,6 +175,7 @@ compdef _git_branch_completion fp
 compdef _git_branch_completion p
 compdef _git_branch_completion pu
 compdef _git_branch_completion bd
+compdef _git_branch_completion wr
 
 ## tmux
 alias tm="tmux new -s "
