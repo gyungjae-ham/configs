@@ -29,3 +29,15 @@ defaults write -g KeyRepeat -int 1
 
 ## neovim, nvim 설치한 후
 - neovim-minimum이 지금 가장 적당한 설정입니다
+
+## tmux
+```shell
+# 1. 플러그인 폴더 생성
+mkdir -p ~/.tmux/plugins
+
+# 2. TPM 저장소 복제
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# 3. tmux 들어간 상태에서
+prefix + I
+```
