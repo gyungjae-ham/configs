@@ -166,7 +166,7 @@ alias d="git df"
 _git_branch_completion() {
     local -a branches
     branches=(${(f)"$(git branch --format='%(refname:short)')"})
-    compadd "$@" $branches
+    compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
 }
 
 compdef _git_branch_completion w
