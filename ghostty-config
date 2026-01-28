@@ -1,103 +1,62 @@
-# font
-font-family = Cascadia Mono NF
-font-size = 20
+# ===== 폰트 =====
+font-family = "Maple Mono NF"
+font-size = 13
+font-feature = "calt"
+font-feature = "liga"
+font-thicken = true
 
-# theme
-#theme = dracula+
-#theme = dracula
-#theme = xcodedark
-#theme = oneHalfDark
-#theme = Cyberdyne
-#theme = cyberpunk
-#theme = iTerm2 Solarized Dark
-theme = Everforest Dark - Hard
-##theme = Github Dark
-#theme = tokyonight-day
-#theme = tokyonight
+# ===== 테마 =====
+theme = dracula+
 
-# window
-cursor-style = block
-adjust-cell-height = 35%
-background-opacity = 0.75
-background-blur-radius = 7
-
-window-padding-balance = true 
+# ===== 창 설정 =====
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+window-decoration = true
 window-save-state = always
 window-colorspace = "display-p3"
+window-width = 120
+window-height = 40
+
+# ===== 투명도 & 블러 =====
+background-opacity = 0.8
+background-blur-radius = 7
+
+# ===== 커서 & 텍스트 =====
+cursor-style = block
+cursor-style-blink = false
+adjust-cell-height = 35%
 minimum-contrast = 2.3
-
-# init location
-working-directory = /Users/luca/Desktop
-window-inherit-working-directory = false
-
-# terminal size
-window-width = 130
-window-height = 35
-window-padding-x = 4
-
-# keybindings
-keybind = cmd+s>r=reload_config
-keybind = cmd+s>x=close_surface
-keybind = ctrl+enter=clear_screen
-
-# tabs 
-keybind = cmd+n=new_tab
-keybind = cmd+s>shift+l=next_tab
-keybind = cmd+s>shift+h=previous_tab
-
-# quick tab switch
-keybind = cmd+s>1=goto_tab:1
-keybind = cmd+s>2=goto_tab:2
-keybind = cmd+s>3=goto_tab:3
-keybind = cmd+s>4=goto_tab:4
-keybind = cmd+s>5=goto_tab:5
-keybind = cmd+s>6=goto_tab:6
-keybind = cmd+s>7=goto_tab:7
-keybind = cmd+s>8=goto_tab:8
-keybind = cmd+s>9=goto_tab:9
-
-# split
-unfocused-split-opacity = 1.0
-
-keybind = cmd+d=new_split:right
-keybind = opt+d=new_split:down
-
-keybind = cmd+s>j=goto_split:bottom
-keybind = cmd+s>k=goto_split:top
-keybind = cmd+s>h=goto_split:left
-keybind = cmd+s>l=goto_split:right
-
-keybind = cmd+s>z=toggle_split_zoom
-
-keybind = cmd+s>e=equalize_splits
-
-# delete whole line
-keybind = cmd+backspace=text:\x15
-
-# clipboard
-copy-on-select = clipboard
-clipboard-trim-trailing-spaces = true
-
-# general
-confirm-close-surface = false
-clipboard-paste-protection = false
-
 adjust-underline-position = 40%
 adjust-underline-thickness = -60%
 
-shell-integration-features = no-cursor,sudo,no-title
+# ===== 스크롤 =====
+scrollback-limit = 100000
 
-# mouse
+# ===== 클립보드 =====
+copy-on-select = clipboard
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = false
+
+# ===== 기본 경로 =====
+working-directory = /Users/luca/Desktop/workspace
+window-inherit-working-directory = false
+
+# ===== 마우스 =====
 mouse-scroll-multiplier = 2
 mouse-hide-while-typing = true
 
-## behavior
+# ===== 기타 =====
+confirm-close-surface = false
+shell-integration = zsh
+shell-integration-features = no-cursor,sudo,no-title
+unfocused-split-opacity = 1.0
+
+# ===== 자동 업데이트 =====
 auto-update = check
 auto-update-channel = stable
 quit-after-last-window-closed = true
 
-## macos
+# ===== macOS 전용 =====
 macos-option-as-alt = true
 macos-titlebar-style = transparent
-
-
