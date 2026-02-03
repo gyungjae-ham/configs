@@ -99,39 +99,34 @@ function wa() {
   cd "$dir"
 }
 
-# 워크트리 삭제
-# 사용법: wr feature/login
+# 워크트리 + 브랜치 삭제
 function wr() {
   if [ -z "$1" ]; then
-    echo "사용법: wr <브랜치명>"
+    echo "사용법: wr <워크트리명>"
     return 1
   fi
   
-  local branch=$1
+  local name=$1
   local main_dir=$(git worktree list | head -1 | awk '{print $1}')
   local base=$(basename "$main_dir")
-  local dir="$(dirname "$main_dir")/${base}-$branch"
+  local dir="$(dirname "$main_dir")/${base}-$name"
   
-  if git worktree remove "$dir"; then
-    git branch -d "$branch" 2>/dev/null || echo "로컬 브랜치 없음 또는 머지 안됨"
-  fi
+  git branch -D "$name" && git worktree remove "$dir"
 }
 
-# 워크트리 강제 삭제 (변경사항 무시)
+# 워크트리 + 브랜치 강제 삭제
 function wrf() {
   if [ -z "$1" ]; then
-    echo "사용법: wrf <브랜치명>"
+    echo "사용법: wrf <워크트리명>"
     return 1
   fi
   
-  local branch=$1
+  local name=$1
   local main_dir=$(git worktree list | head -1 | awk '{print $1}')
   local base=$(basename "$main_dir")
-  local dir="$(dirname "$main_dir")/${base}-$branch"
+  local dir="$(dirname "$main_dir")/${base}-$name"
   
-  if git worktree remove --force "$dir"; then
-    git branch -D "$branch" 2>/dev/null || echo "로컬 브랜치 없음"
-  fi
+  git branch -D "$name" && git worktree remove --force "$dir"
 }
 
 # 워크트리로 이동 (fzf 필요)
