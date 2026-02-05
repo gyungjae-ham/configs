@@ -145,9 +145,10 @@ function wi() {
 
 alias sp="git stash pop"
 alias sl="git stash list"
+alias st="git overview" # 사용하려면 brew install git-delta
 alias ba="git branch -a"
-alias ov="git overview" # 사용하려면 brew install git-delta
-alias d="git df"
+alias df="git df"
+alias fo="git fo"
 
 ## completions
 _git_branch_completion() {

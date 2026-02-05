@@ -3,9 +3,11 @@
     email = luca@bindcorporation.com
 
 [alias]
-    l = log
     s = status
     a = add .
+    l = log
+    fo = fetch origin
+    f = fetch
     hs = log --graph --all --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(white)%s %Cgreen(%cr) %C(bold blue){{%an}}%C(reset) %C(blue)%d%C(reset)' --date=short
     overview = "!f() { \
       echo \"=== Branch Information ===\"; \
