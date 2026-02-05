@@ -81,22 +81,28 @@ function wl() {
 # 워크트리 추가 (브랜치 있으면 체크아웃, 없으면 생성)
 # 사용법: wa feature/login
 function wa() {
+  local create=false
+  
+  while getopts "c" opt; do
+    case $opt in
+      c) create=true ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+  
   if [ -z "$1" ]; then
-    echo "사용법: wa <브랜치명>"
+    echo "사용법: wa [-c] <워크트리명>"
     return 1
   fi
   
-  local branch=$1
-  local dir="../${PWD##*/}-$branch"
+  local name="${1#origin/}"
+  local dir="../${PWD##*/}-$name"
   
-  # 브랜치 존재 여부 확인
-  if git show-ref --verify --quiet "refs/heads/$branch"; then
-    git worktree add "$dir" "$branch"
+  if $create; then
+    git worktree add -b "$name" "$dir" && cd "$dir"
   else
-    git worktree add -b "$branch" "$dir"
+    git fetch origin "$name" && git worktree add "$dir" "$name" && cd "$dir"
   fi
-  
-  cd "$dir"
 }
 
 # 워크트리 + 브랜치 삭제
