@@ -146,7 +146,7 @@ alias d="git df"
 ## completions
 _git_branch_completion() {
     local -a branches
-    branches=(${(f)"$(git branch --format='%(refname:short)')"})
+    branches=(${(f)"$(git branch -a --format='%(refname:short)')"})
     compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
 }
 
@@ -161,14 +161,13 @@ _git_worktree_completion() {
     compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $names
 }
 
-
 compdef _git_branch_completion w
 compdef _git_branch_completion f
 compdef _git_branch_completion fp
 compdef _git_branch_completion p
 compdef _git_branch_completion pu
 compdef _git_branch_completion bd
-compdef _git_worktree_completion wa
+compdef _git_branch_completion wa
 compdef _git_worktree_completion wr
 
 ## tmux
