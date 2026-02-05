@@ -150,13 +150,26 @@ _git_branch_completion() {
     compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
 }
 
+_git_worktree_completion() {
+    local main_dir=$(git worktree list | head -1 | awk '{print $1}')
+    local base=$(basename "$main_dir")
+    local parent=$(dirname "$main_dir")
+    local -a names
+    names=(${(f)"$(git worktree list --porcelain | grep '^worktree ' | sed 's/^worktree //' | while read dir; do
+        echo "${dir#$parent/$base-}"
+    done | tail -n +2)"})
+    compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $names
+}
+
+
 compdef _git_branch_completion w
 compdef _git_branch_completion f
 compdef _git_branch_completion fp
 compdef _git_branch_completion p
 compdef _git_branch_completion pu
 compdef _git_branch_completion bd
-compdef _git_branch_completion wr
+compdef _git_worktree_completion wa
+compdef _git_worktree_completion wr
 
 ## tmux
 alias tm="tmux new -s "
