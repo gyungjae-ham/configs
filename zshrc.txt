@@ -129,7 +129,22 @@ function wr() {
   local dir="$(dirname "$main_dir")/${base}-$name"
   
   git worktree remove "$dir" 2>/dev/null || git worktree remove --force "$dir"
-  git branch -D "$name"
+  
+  # 브랜치 삭제 시도 - 실패하면 앞에서부터 / 제거하며 재시도
+  local branch="$name"
+  while true; do
+    if git branch -D "$branch" 2>/dev/null; then
+      echo "브랜치 '$branch' 삭제됨"
+      return 0
+    fi
+    
+    if [[ "$branch" != */* ]]; then
+      echo "error: 브랜치를 찾을 수 없음: $name"
+      return 1
+    fi
+    
+    branch="${branch#*/}"
+  done
 }
 
 # 워크트리로 이동 (fzf 필요)
