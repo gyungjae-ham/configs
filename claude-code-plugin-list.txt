@@ -1,0 +1,3 @@
+serena
+jira-mcp
+claude-hud
