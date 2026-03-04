@@ -1,8 +1,7 @@
-# 설정 변수 (본인 환경에 맞게 수정)
+#!/bin/bash
 SERENA_PATH=/Users/luca/Desktop/serena
-# 현재 디렉토리에 Serena MCP 추가
-claude mcp add serena -- uv run --directory $SERENA_PATH serena-mcp-server --context claude-code --project "$(pwd)"
+
+claude mcp add serena --scope project -- uv run --directory $SERENA_PATH serena-mcp-server --context claude-code --project "$(pwd)"
 
 echo "✅ Serena MCP가 $(pwd) 프로젝트에 추가되었습니다"
-echo "📌 Claude Code에서 /mcp__serena__initial_instructions 명령을 실행하세요"
 
