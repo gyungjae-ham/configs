@@ -1,0 +1,84 @@
+{
+  "cleanupPeriodDays": 365,
+  "env": {
+    "ENABLE_LSP_TOOL": "1",
+    "BASH_MAX_OUTPUT_LENGTH": "150000",
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "75",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "BASH_MAX_TIMEOUT_MS": "600000",
+    "BASH_DEFAULT_TIMEOUT_MS": "300000",
+    "CLAUDE_READER_MAX_TOKEN_COUNT": "100000",
+    "CLAUDE_CODE_SKIP_ONBOARDING": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "WebFetch",
+      "mcp__serena__*",
+      "mcp__atlassian__*",
+      "mcp__claude_ai_gmail__*",
+      "mcp__claude_ai_google_calendar__*"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)"
+    ],
+    "additionalDirectories": [
+      "/Users/luca/Desktop/workspace"
+    ]
+  },
+  "skipDangerousPermissionPrompt": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c '\"/Users/luca/.bun/bin/bun\" \"$(ls -td ~/.claude/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | head -1)src/index.ts\"'"
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "claude-hud@claude-hud": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
+  "teammateMode": "tmux",
+  "language": "한국어",
+  "effortLevel": "high",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "showThinkingSummaries": true,
+  "spinnerTipsEnabled": false,
+  "promptSuggestionEnabled": false,
+  "autoUpdatesChannel": "stable",
+  "includeGitInstructions": false,
+  "prefersReducedMotion": true,
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "showClearContextOnPlanAccept": true,
+  "defaultView": "chat",
+  "feedbackSurveyRate": 0,
+  "autoMode": {
+    "environment": ["Django 3.2 + DRF 프로젝트", "uv 패키지 매니저 사용"],
+    "allow": ["uv run pytest 실행", "uv run python manage.py 실행"],
+    "soft_deny": ["git push 금지", "DB 마이그레이션 실행 금지"]
+  },
+  "voiceEnabled": true,
+  "autoMemoryEnabled": true,
+  "autoDreamEnabled": true,
+  "alwaysThinkingEnabled": true,
+  "fastModePerSessionOptIn": true,
+  "terminalTitleFromRename": false,
+  "plansDirectory": ".claude/plans",
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": ["생각하는 중", "코드 읽는 중", "뇌세포 소환 중", "커피 마시는 중", "설계하는 중", "리팩토링 중"]
+  }
+}
