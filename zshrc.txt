@@ -37,19 +37,17 @@ function mc {
 alias ip="curl -s http://checkip.dyndns.org/ | sed 's/[a-zA-Z<>/ :]//g'"
 
 ## git
-function w() { git switch "$@" } # 브랜치 이동
-function su() { git stash save -u "$@" } # Stash 저장
-function sc() { git switch -c "$@" } # 브랜치 생성하면서 이동
-function f() { git fetch origin "$@" } # git fetch
-function fp() { git push -f origin "$@" } # git force push
-function p() { git push origin "$@" } # git push
-function pu() { git pull origin "$@" } # git pull
-function bd() { git branch -D "$@" } # git branch 삭제
-function spn() { git stash pop stash@{$@} } # git stash 제거하면서 적용
-function sa() { git stash apply stash@{$@} } # git stash 적용만 stash는 유지
-function sd() { git stash drop stash@{$@} } # git stash 삭제
-
-# git commit "제목""본문"
+function w() { git switch "$@" }
+function su() { git stash save -u "$@" }
+function sc() { git switch -c "$@" }
+function f() { git fetch origin "$@" }
+function fp() { git push -f origin "$@" }
+function p() { git push origin "$@" }
+function pu() { git pull origin "$@" }
+function bd() { git branch -D "$@" }
+function spn() { git stash pop stash@{$@} }
+function sa() { git stash apply stash@{$@} }
+function sd() { git stash drop stash@{$@} }
 function c() {
   if [ -z "$1" ]; then
     echo "오류: 제목을 입력해주세요."
@@ -66,10 +64,12 @@ function c() {
   fi
 }
 
-# 워크트리 리스트
-function wl() {
-  git worktree list
-}
+alias sp="git stash pop"
+alias sl="git stash list"
+alias st="git overview" # 사용하려면 brew install git-delta
+alias ba="git branch -a"
+alias df="git df"
+alias fo="git fo"
 
 # ===== Git Worktree 함수들 =====
 
@@ -79,6 +79,7 @@ function wl() {
 }
 
 # 워크트리 추가 (브랜치 있으면 체크아웃, 없으면 생성)
+# 사용법: wa feature/login
 function wa() {
   local create=false
   
@@ -148,7 +149,7 @@ function wr() {
 }
 
 # 워크트리로 이동 (fzf 필요)
-function wc() {
+function wt() {
   local selected=$(git worktree list | fzf --height 40% | awk '{print $1}')
   if [ -n "$selected" ]; then
     cd "$selected"
@@ -169,18 +170,11 @@ function wi() {
   git worktree list
 }
 
-alias sp="git stash pop"
-alias sl="git stash list"
-alias st="git overview" # 사용하려면 brew install git-delta
-alias ba="git branch -a"
-alias df="git df"
-alias fo="git fo"
-
 ## completions
 _git_branch_completion() {
     local -a branches
     branches=(${(f)"$(git branch -a --format='%(refname:short)')"})
-    compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
+    compadd -M 'M:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
 }
 
 _git_worktree_completion() {
@@ -191,7 +185,7 @@ _git_worktree_completion() {
     names=(${(f)"$(git worktree list --porcelain | grep '^worktree ' | sed 's/^worktree //' | while read dir; do
         echo "${dir#$parent/$base-}"
     done | tail -n +2)"})
-    compadd -M 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $names
+    compadd -M 'M:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $names
 }
 
 compdef _git_branch_completion w
