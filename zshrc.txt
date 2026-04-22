@@ -174,7 +174,7 @@ function wi() {
 _git_branch_completion() {
     local -a branches
     branches=(${(f)"$(git branch -a --format='%(refname:short)')"})
-    compadd -M 'M:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
+    compadd -m 'M:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $branches
 }
 
 _git_worktree_completion() {
@@ -185,7 +185,7 @@ _git_worktree_completion() {
     names=(${(f)"$(git worktree list --porcelain | grep '^worktree ' | sed 's/^worktree //' | while read dir; do
         echo "${dir#$parent/$base-}"
     done | tail -n +2)"})
-    compadd -M 'M:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $names
+    compadd -m 'M:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' "$@" $names
 }
 
 compdef _git_branch_completion w
