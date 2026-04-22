@@ -1,0 +1,34 @@
+[
+  {
+    "label": "django",
+    "command": "direnv exec . python manage.py runserver",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "spring-local",
+    "command": "./gradlew bootRun --args='--spring.profiles.active=local'",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "spring-test",
+    "command": "./gradlew bootRun --args='--spring.profiles.active=dev'",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "spring-prod",
+    "command": "./gradlew bootRun --args='--spring.profiles.active=prod'",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  }
+]
