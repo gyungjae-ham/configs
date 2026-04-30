@@ -1,7 +1,7 @@
 [
   {
     "label": "django",
-    "command": "direnv exec . python manage.py runserver",
+    "command": "direnv exec . uv run python manage.py runserver",
     "cwd": "$ZED_WORKTREE_ROOT",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
@@ -9,7 +9,10 @@
   },
   {
     "label": "spring-local",
-    "command": "./gradlew bootRun --args='--spring.profiles.active=local'",
+    "command": "./gradlew bootRun --console=plain --args='--spring.profiles.active=local'",
+    "env": {
+      "AWS_PROFILE": "athler-dev"
+    },
     "cwd": "$ZED_WORKTREE_ROOT",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
@@ -17,7 +20,10 @@
   },
   {
     "label": "spring-test",
-    "command": "./gradlew bootRun --args='--spring.profiles.active=dev'",
+    "command": "./gradlew bootRun --console=plain --args='--spring.profiles.active=dev'",
+    "env": {
+      "AWS_PROFILE": "athler-dev"
+    },
     "cwd": "$ZED_WORKTREE_ROOT",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
@@ -25,7 +31,7 @@
   },
   {
     "label": "spring-prod",
-    "command": "./gradlew bootRun --args='--spring.profiles.active=prod'",
+    "command": "./gradlew bootRun --console=plain --args='--spring.profiles.active=prod'",
     "cwd": "$ZED_WORKTREE_ROOT",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,

@@ -1,12 +1,5 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "disable_ai": false,
   "edit_predictions": {
     "open_ai_compatible_api": {
       "max_output_tokens": 150
@@ -33,14 +26,51 @@
     "git_status": true
   },
   "agent": {
+    "thinking_display": "always_collapsed",
+    "tool_permissions": {
+      "tools": {
+        "restore_file_from_disk": {
+          "default": "allow"
+        },
+        "search_web": {
+          "default": "allow"
+        },
+        "fetch": {
+          "default": "allow"
+        },
+        "save_file": {
+          "default": "allow"
+        },
+        "create_directory": {
+          "default": "allow"
+        },
+        "move_path": {
+          "default": "allow"
+        },
+        "copy_path": {
+          "default": "allow"
+        },
+        "edit_file": {
+          "default": "allow"
+        },
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
+    "notify_when_agent_waiting": "never",
+    "show_turn_stats": true,
+    "single_file_review": true,
+    "sidebar_side": "right",
     "inline_assistant_model": {
-      "provider": "openai",
-      "model": "gpt-5.3-codex",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6-latest",
       "enable_thinking": false
     },
     "default_model": {
-      "provider": "openai",
-      "model": "gpt-5.3-codex",
+      "effort": "medium",
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6-latest",
       "enable_thinking": true
     },
     "favorite_models": [
@@ -53,6 +83,16 @@
         "provider": "openai",
         "model": "gpt-5.3-codex",
         "enable_thinking": false
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-4-6-latest",
+        "enable_thinking": false
+      },
+      {
+        "provider": "anthropic",
+        "model": "claude-sonnet-4-6-latest",
+        "enable_thinking": false
       }
     ],
     "model_parameters": []
@@ -61,34 +101,56 @@
   "buffer_font_family": "Cascadia Mono NF",
   "telemetry": {
     "diagnostics": false,
-    "metrics": false,
+    "metrics": false
   },
   "session": {
-    "trust_all_worktrees": true,
+    "trust_all_worktrees": true
   },
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "always",
     "use_smartcase": true,
-    "use_neovim": false,
+    "use_neovim": false
   },
   "vertical_scroll_margin": 15,
   "relative_line_numbers": "disabled",
   "autosave": "on_focus_change",
   "agent_servers": {
     "claude-acp": {
-      "type": "registry",
-    },
+      "type": "registry"
+    }
   },
   "base_keymap": "JetBrains",
   "ui_font_size": 13.0,
   "buffer_font_size": 13.0,
   "theme": {
     "mode": "light",
-    "light": "Catppuccin Latte",
-    "dark": "Dracula",
+    "light": "Catppuccin Latte - No Italics",
+    "dark": "Dracula"
   },
   "file_types": {
-    "Shell Script": ["envrc", ".envrc"]
+    "Shell Script": [
+      "envrc",
+      ".envrc"
+    ]
   },
+  "context_servers": {
+    "athler-test": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@benborla29/mcp-server-mysql"
+      ],
+      "env": {
+        "MYSQL_HOST": "inner-test-db-260323.cpenf0jkho3m.ap-northeast-2.rds.amazonaws.com",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "athler",
+        "MYSQL_PASS": "voXugoVM4PybwvpKQ-8.",
+        "MYSQL_DB": "Athler",
+        "ALLOW_INSERT_OPERATION": "false",
+        "ALLOW_UPDATE_OPERATION": "false",
+        "ALLOW_DELETE_OPERATION": "false"
+      }
+    }
+  }
 }
